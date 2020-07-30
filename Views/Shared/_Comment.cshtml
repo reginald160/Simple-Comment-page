@@ -1,0 +1,47 @@
+﻿@model SimpleComent.Models.CommentViewModel
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+
+
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Comment" asp-controller="Works">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+
+                <input asp-for="WorkId" class="form-control" type="hidden" />
+
+            </div>
+            <div class="form-group">
+
+                @*<input asp-for="User" class="form-control" type="hidden" value="@ViewBag.user" />*@
+                @if (SignInManager.IsSignedIn(User))
+                {
+                    <input asp-for="User" type="hidden" value="@User.Identity.Name" />
+                }
+
+            </div>
+
+
+            <div class="form-group">
+                <label asp-for="Text" class="control-label"></label>
+                <textarea asp-for="Text" class="form-control"></textarea>
+                <span asp-validation-for="Text" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Submit" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

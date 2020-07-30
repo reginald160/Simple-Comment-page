@@ -1,0 +1,56 @@
+﻿@model SimpleComent.Models.Work
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Work</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Details)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Details)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+    </dl>
+    <div>
+     
+    </div>
+    <div class="form-group row">
+
+        <div class="col-sm-6 mb-3 mb-sm-0" asp-for="">
+        
+            @foreach (var item in Model.Comments)
+            {   <hr />
+                <div>
+                    <p><b>Comment</b></p>
+                    <p>@item.Text</p>
+                    <p>@item.User</p>
+                    <p>date @item.CreatedDate</p>
+                </div>               
+            }
+            @{ await Html.RenderPartialAsync("_Comment", new SimpleComent.Models.CommentViewModel { WorkId = Model.Id, CommentId = 0 });
+            }
+            ;
+        </div>
+        <div class="col-sm-6 mb-3 mb-sm-0">
+           
+        </div>
+
+    </div>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>
